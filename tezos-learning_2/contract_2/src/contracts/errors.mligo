@@ -1,1 +1,0 @@
-let bad_id : string = "Bad id"

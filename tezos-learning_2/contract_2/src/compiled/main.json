@@ -1,0 +1,91 @@
+[ { "prim": "parameter",
+    "args":
+      [ { "prim": "or",
+          "args":
+            [ { "prim": "nat", "annots": [ "%getData" ] },
+              { "prim": "pair",
+                "args":
+                  [ { "prim": "pair",
+                      "args":
+                        [ { "prim": "string", "annots": [ "%id" ] },
+                          { "prim": "string", "annots": [ "%name" ] } ] },
+                    { "prim": "nat", "annots": [ "%rank" ] },
+                    { "prim": "string", "annots": [ "%symbol" ] } ],
+                "annots": [ "%setData" ] } ] } ] },
+  { "prim": "storage",
+    "args":
+      [ { "prim": "pair",
+          "args":
+            [ { "prim": "map",
+                "args":
+                  [ { "prim": "nat" },
+                    { "prim": "pair",
+                      "args":
+                        [ { "prim": "pair",
+                            "args":
+                              [ { "prim": "string", "annots": [ "%id" ] },
+                                { "prim": "string", "annots": [ "%name" ] } ] },
+                          { "prim": "nat", "annots": [ "%rank" ] },
+                          { "prim": "string", "annots": [ "%symbol" ] } ] } ],
+                "annots": [ "%coins_map" ] },
+              { "prim": "nat", "annots": [ "%last_index" ] } ] } ] },
+  { "prim": "code",
+    "args":
+      [ [ { "prim": "UNPAIR" },
+          { "prim": "IF_LEFT",
+            "args":
+              [ [ { "prim": "DUP", "args": [ { "int": "2" } ] },
+                  { "prim": "CAR" }, { "prim": "SWAP" }, { "prim": "GET" },
+                  { "prim": "IF_NONE",
+                    "args":
+                      [ [ { "prim": "PUSH",
+                            "args":
+                              [ { "prim": "string" },
+                                { "string": "Bad id" } ] },
+                          { "prim": "FAILWITH" } ],
+                        [ { "prim": "DROP" }, { "prim": "DUP" },
+                          { "prim": "CAR" } ] ] }, { "prim": "SWAP" },
+                  { "prim": "CDR" }, { "prim": "SWAP" } ],
+                [ { "prim": "PUSH",
+                    "args": [ { "prim": "nat" }, { "int": "1" } ] },
+                  { "prim": "DUP", "args": [ { "int": "3" } ] },
+                  { "prim": "CDR" }, { "prim": "ADD" },
+                  { "prim": "DUP", "args": [ { "int": "3" } ] },
+                  { "prim": "CAR" },
+                  { "prim": "DIG", "args": [ { "int": "2" } ] },
+                  { "prim": "DIG", "args": [ { "int": "3" } ] },
+                  { "prim": "CDR" }, { "prim": "SWAP" }, { "prim": "SOME" },
+                  { "prim": "SWAP" }, { "prim": "UPDATE" } ] ] },
+          { "prim": "PAIR" },
+          { "prim": "NIL", "args": [ { "prim": "operation" } ] },
+          { "prim": "PAIR" } ] ] },
+  { "prim": "view",
+    "args":
+      [ { "string": "get_data" }, { "prim": "nat" },
+        { "prim": "pair",
+          "args":
+            [ { "prim": "map",
+                "args":
+                  [ { "prim": "nat" },
+                    { "prim": "pair",
+                      "args":
+                        [ { "prim": "pair",
+                            "args":
+                              [ { "prim": "string", "annots": [ "%id" ] },
+                                { "prim": "string", "annots": [ "%name" ] } ] },
+                          { "prim": "nat", "annots": [ "%rank" ] },
+                          { "prim": "string", "annots": [ "%symbol" ] } ] } ],
+                "annots": [ "%coins_map" ] },
+              { "prim": "nat", "annots": [ "%last_index" ] } ] },
+        [ { "prim": "UNPAIR" },
+          { "prim": "DUP", "args": [ { "int": "2" } ] }, { "prim": "CAR" },
+          { "prim": "SWAP" }, { "prim": "GET" },
+          { "prim": "IF_NONE",
+            "args":
+              [ [ { "prim": "PUSH",
+                    "args": [ { "prim": "string" }, { "string": "Bad id" } ] },
+                  { "prim": "FAILWITH" } ],
+                [ { "prim": "DROP" }, { "prim": "DUP" }, { "prim": "CAR" } ] ] },
+          { "prim": "SWAP" }, { "prim": "CDR" }, { "prim": "SWAP" },
+          { "prim": "PAIR" } ] ] } ]
+

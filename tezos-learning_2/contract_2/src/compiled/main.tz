@@ -1,0 +1,51 @@
+{ parameter
+    (or (nat %getData)
+        (pair %setData (pair (string %id) (string %name)) (nat %rank) (string %symbol))) ;
+  storage
+    (pair (map %coins_map
+             nat
+             (pair (pair (string %id) (string %name)) (nat %rank) (string %symbol)))
+          (nat %last_index)) ;
+  code { UNPAIR ;
+         IF_LEFT
+           { DUP 2 ;
+             CAR ;
+             SWAP ;
+             GET ;
+             IF_NONE { PUSH string "Bad id" ; FAILWITH } { DROP ; DUP ; CAR } ;
+             SWAP ;
+             CDR ;
+             SWAP }
+           { PUSH nat 1 ;
+             DUP 3 ;
+             CDR ;
+             ADD ;
+             DUP 3 ;
+             CAR ;
+             DIG 2 ;
+             DIG 3 ;
+             CDR ;
+             SWAP ;
+             SOME ;
+             SWAP ;
+             UPDATE } ;
+         PAIR ;
+         NIL operation ;
+         PAIR } ;
+  view "get_data"
+       nat
+       (pair (map %coins_map
+                nat
+                (pair (pair (string %id) (string %name)) (nat %rank) (string %symbol)))
+             (nat %last_index))
+       { UNPAIR ;
+         DUP 2 ;
+         CAR ;
+         SWAP ;
+         GET ;
+         IF_NONE { PUSH string "Bad id" ; FAILWITH } { DROP ; DUP ; CAR } ;
+         SWAP ;
+         CDR ;
+         SWAP ;
+         PAIR } }
+
